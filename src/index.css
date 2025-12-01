@@ -1,0 +1,100 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-900 text-white;
+}
+
+input, textarea, select {
+  color: #111827; /* text-gray-900 */
+}
+@keyframes float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float infinite ease-in-out;
+}
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 5s ease infinite;
+}
+
+@keyframes pulse-fast {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+.animate-pulse-fast {
+  animation: pulse-fast 2s infinite ease-in-out;
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+/* Slow rotation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 60s linear infinite; /* 1 full rotation per minute */
+}
+
+/* Soft pulsing glow */
+@keyframes pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); }
+  50% { filter: drop-shadow(0 0 20px rgba(255,255,255,0.6)); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 6s ease-in-out infinite;
+}
+/* Slow rotation (background logo) */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 80s linear infinite; /* full rotation every 80s */
+}
+@font-face {
+  font-family: "Nico Moji";
+  src: url("/fonts/nico-moji.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.nico-font {
+  font-family: "Nico Moji", sans-serif;
+  font-size: x-large;
+}
