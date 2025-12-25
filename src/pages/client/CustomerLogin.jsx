@@ -102,7 +102,7 @@ const CustomerLogin = () => {
       }
 
       // 2️⃣ CUSTOMER LOGIN
-      const customerRes = await axios.post(`${API_BASE_URL}/auth/Login`, {
+      const customerRes = await axios.post(`${API_BASE_URL}/auth/login`, {
         emailOrMobile: formData.email.trim(),
         password: formData.password,
       });
@@ -111,15 +111,15 @@ const CustomerLogin = () => {
 
       // ✅ Save in localStorage instead of sessionStorage
       localStorage.setItem("authToken", token);
-      localStorage.setItem("userData", JSON.stringify(user));
       localStorage.setItem("userType", "customer");
+      localStorage.setItem("user", JSON.stringify(user));
 
       setCustomer(user, token);
       setToken(token);
 
       showMessage("success", "Login successful!", 0);
 
-      setTimeout(() => navigate("/CustomerDashboard"), 600);
+      navigate("/CustomerDashboard");
     } catch (error) {
       showMessage(
         "error",
@@ -248,7 +248,7 @@ const CustomerLogin = () => {
         </div>
 
         <p className="text-center text-gray-500 text-sm mt-6">
-          © 2024 Your Company. All rights reserved.
+          © 2025 SHOPZY. All rights reserved.
         </p>
       </div>
 

@@ -4,6 +4,7 @@ import {
   FaInstagram,
   FaYoutube,
   FaWhatsapp,
+  FaTwitter,
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -16,6 +17,7 @@ const Footer = () => {
     { icon: <FaInstagram />, link: "https://instagram.com", color: "#E4405F" },
     { icon: <FaYoutube />, link: "https://youtube.com", color: "#FF0000" },
     { icon: <FaWhatsapp />, link: "https://whatsapp.com", color: "#25D366" },
+    { icon: <FaTwitter />, link: "https://x.com/indxindshopee", color: "#25D366" },
   ];
 
   return (

@@ -1,12 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Star, TrendingUp, Award, Shield } from 'lucide-react';
+import { useLocation } from "react-router-dom";
+import { Star, TrendingUp, Award, Shield } from "lucide-react";
 import TopNavbar from "./TopNavbar";
 import FeaturedProducts from "../FeaturedProducts";
 import { fetchFeaturedProducts } from "../../redux/productSlice";
+import BannerModal from "../../components/BannerModal";
 
 export default function Homepage() {
   const dispatch = useDispatch();
+  const location = useLocation(); // ✅ add this
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    // Example 1: Show modal if URL is exactly "/?showBanner=true"
+    const params = new URLSearchParams(location.search);
+    if (params.get("showBanner") === "true") {
+      setModalOpen(true);
+    }
+
+    // Example 2: Show modal if URL path matches "/promo"
+    if (location.pathname === "/promo") {
+      setModalOpen(true);
+    }
+  }, [location]);
+
   const { featured, loading } = useSelector((state) => state.products);
 
   useEffect(() => {
@@ -15,26 +33,58 @@ export default function Homepage() {
 
   // Sample brand logos - replace with actual product brands from your database
   const brands = [
-    { name: 'Nike', logo: 'https://logo.clearbit.com/nike.com', category: 'Fashion' },
-    { name: 'Apple', logo: 'https://logo.clearbit.com/apple.com', category: 'Electronics' },
-    { name: 'Samsung', logo: 'https://logo.clearbit.com/samsung.com', category: 'Electronics' },
-    { name: 'Adidas', logo: 'https://logo.clearbit.com/adidas.com', category: 'Fashion' },
-    { name: 'Sony', logo: 'https://logo.clearbit.com/sony.com', category: 'Electronics' },
-    { name: 'Puma', logo: 'https://logo.clearbit.com/puma.com', category: 'Fashion' },
-    { name: 'LG', logo: 'https://logo.clearbit.com/lg.com', category: 'Electronics' },
-    { name: 'Zara', logo: 'https://logo.clearbit.com/zara.com', category: 'Fashion' },
-    { name: 'H&M', logo: 'https://logo.clearbit.com/hm.com', category: 'Fashion' },
-    { name: 'Dell', logo: 'https://logo.clearbit.com/dell.com', category: 'Electronics' },
+    {
+      name: "Nike",
+      logo: "https://logo.clearbit.com/nike.com",
+      category: "Fashion",
+    },
+    {
+      name: "Apple",
+      logo: "https://logo.clearbit.com/apple.com",
+      category: "Electronics",
+    },
+    {
+      name: "Samsung",
+      logo: "https://logo.clearbit.com/samsung.com",
+      category: "Electronics",
+    },
+    {
+      name: "Adidas",
+      logo: "https://logo.clearbit.com/adidas.com",
+      category: "Fashion",
+    },
+    {
+      name: "Sony",
+      logo: "https://logo.clearbit.com/sony.com",
+      category: "Electronics",
+    },
+    {
+      name: "Puma",
+      logo: "https://logo.clearbit.com/puma.com",
+      category: "Fashion",
+    },
+    {
+      name: "LG",
+      logo: "https://logo.clearbit.com/lg.com",
+      category: "Electronics",
+    },
+    {
+      name: "Zara",
+      logo: "https://logo.clearbit.com/zara.com",
+      category: "Fashion",
+    },
+    {
+      name: "H&M",
+      logo: "https://logo.clearbit.com/hm.com",
+      category: "Fashion",
+    },
+    {
+      name: "Dell",
+      logo: "https://logo.clearbit.com/dell.com",
+      category: "Electronics",
+    },
   ];
 
-  // const stats = [
-  //   { icon: <Star className="w-6 h-6" />, value: '500+', label: 'Premium Brands', color: 'from-amber-500 to-orange-500' },
-  //   { icon: <TrendingUp className="w-6 h-6" />, value: '50K+', label: 'Products Listed', color: 'from-blue-500 to-cyan-500' },
-  //   { icon: <Award className="w-6 h-6" />, value: '1M+', label: 'Happy Customers', color: 'from-purple-500 to-pink-500' },
-  //   { icon: <Shield className="w-6 h-6" />, value: '100%', label: 'Authentic Products', color: 'from-green-500 to-emerald-500' },
-  // ];
-
-  
   // Category sections data
   const categoryGroups = [
     {
@@ -46,28 +96,32 @@ export default function Homepage() {
           name: "Pilgrim Shampoo",
           label: "Most-loved",
           labelColor: "text-green-600",
-          image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=400&fit=crop",
         },
         {
           id: 2,
           name: "HERBLOOM Hair Treatment",
           label: "Specials",
           labelColor: "text-green-600",
-          image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=400&h=400&fit=crop",
         },
         {
           id: 3,
           name: "Women's Trousers",
           label: "In Focus Now",
           labelColor: "text-green-600",
-          image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop",
         },
         {
           id: 4,
           name: "Co-ords",
           label: "Hand-picked",
           labelColor: "text-pink-600",
-          image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=400&fit=crop",
         },
       ],
     },
@@ -80,28 +134,32 @@ export default function Homepage() {
           name: "VeBNoR Men's T-shirts",
           label: "Top Picks",
           labelColor: "text-green-600",
-          image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop",
         },
         {
           id: 6,
           name: "NUDORA Women's Bras",
           label: "Popular",
           labelColor: "text-green-600",
-          image: "https://images.unsplash.com/photo-1519657337289-077653f724ed?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1519657337289-077653f724ed?w=400&h=400&fit=crop",
         },
         {
           id: 7,
           name: "Women's Ethnic Sets",
           label: "In Focus Now",
           labelColor: "text-green-600",
-          image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=400&fit=crop",
         },
         {
           id: 8,
           name: "Beauty And Grooming",
           label: "Widest Range",
           labelColor: "text-green-600",
-          image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400&h=400&fit=crop",
         },
       ],
     },
@@ -114,28 +172,32 @@ export default function Homepage() {
           name: "Wireless Headphones",
           label: "Up to 70% Off",
           labelColor: "text-red-600",
-          image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
         },
         {
           id: 10,
           name: "Smart Watches",
           label: "Best Deals",
           labelColor: "text-red-600",
-          image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
         },
         {
           id: 11,
           name: "Running Shoes",
           label: "Special Offer",
           labelColor: "text-red-600",
-          image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
         },
         {
           id: 12,
           name: "Home Decor",
           label: "Mega Sale",
           labelColor: "text-red-600",
-          image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&h=400&fit=crop",
+          image:
+            "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&h=400&fit=crop",
         },
       ],
     },
@@ -147,12 +209,10 @@ export default function Homepage() {
       {/* <TopNavbar /> */}
 
       {/* Featured Products Section */}
-<section className="py-1 bg-white mt-0">
-
-
+      <section className="py-1 bg-white mt-0">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
-           {/* <h2 className="text-4xl text-gray-800 mb-3 mt-5">
+            {/* <h2 className="text-4xl text-gray-800 mb-3 mt-5">
 
               Featured Products
             </h2> */}
@@ -173,7 +233,6 @@ export default function Homepage() {
           )}
         </div>
       </section>
-
 
       {/* Category Grid Sections */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
@@ -224,7 +283,9 @@ export default function Homepage() {
                     <h3 className="font-semibold text-gray-900 text-sm sm:text-base mb-1 line-clamp-2">
                       {category.name}
                     </h3>
-                    <p className={`text-xs sm:text-sm font-medium ${category.labelColor}`}>
+                    <p
+                      className={`text-xs sm:text-sm font-medium ${category.labelColor}`}
+                    >
                       {category.label}
                     </p>
                   </div>
@@ -280,6 +341,12 @@ export default function Homepage() {
           animation-play-state: paused;
         }
       `}</style>
+
+      <BannerModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        imageSrc="/assets/images/shopee-modal.webp" // replace with your banner
+      />
     </div>
   );
 }

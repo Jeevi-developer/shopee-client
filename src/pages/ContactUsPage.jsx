@@ -156,8 +156,8 @@ export default function ContactUsPage() {
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800">Visit Us</h3>
               </div>
-              <p className="text-gray-600 mb-2 sm:mb-3 text-sm sm:text-base">Come say hello at our office</p>
-              <p className="text-gray-800 font-semibold text-sm sm:text-base">
+              {/* <p className="text-gray-600 mb-2 sm:mb-3 text-sm sm:text-base">Come say hello at our office</p> */}
+              <p className="text-gray-800 font-normal text-sm sm:text-base">
                 5/45, Opposite to 1008 Sivalayam Temple, Salem to Cochin Highway, Ariyanoor, Salem, Tamilnadu, India. Pin - 636308
               </p>
             </div>
@@ -166,9 +166,9 @@ export default function ContactUsPage() {
             <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 text-white animate-slide-right animation-delay-600">
               <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <Clock className="w-5 h-5 sm:w-6 sm:h-6" />
-                <h3 className="text-lg sm:text-xl font-bold">Business Hours</h3>
+                <h3 className="text-lg sm:text-xl font-bold">Business Hours - 24/7</h3>
               </div>
-              <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+              {/* <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <div className="flex justify-between">
                   <span>Monday - Friday:</span>
                   <span className="font-bold">8:00 AM - 8:00 PM</span>
@@ -181,7 +181,7 @@ export default function ContactUsPage() {
                   <span>Sunday:</span>
                   <span className="font-bold">Closed</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 

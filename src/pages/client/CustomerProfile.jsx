@@ -4,6 +4,7 @@ import {
   Calendar, Shield, Bell, CreditCard, Edit2, Save 
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 
 const CustomerProfile = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const CustomerProfile = () => {
   const handleSave = () => {
     setProfileData({ ...editData });
     setIsEditing(false);
-    alert('Profile updated successfully!');
+    toast.success('Profile updated successfully!');
   };
 
   const handleLogout = () => {

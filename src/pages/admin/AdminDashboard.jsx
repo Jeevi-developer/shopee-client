@@ -16,11 +16,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import SellersManagement from "./SellersManagement";
-// import CustomersManagement from "./CustomersManagement";
-// import ProductsManagement from "./ProductsManagement";
-// import OrdersManagement from "./OrdersManagement";
-// import ReportsManagement from "./ReportsManagement";
-// import SettingsManagement from "./SettingsManagement";
+import CustomersManagement from "./CustomersManagement"; // ✅ Import the real component
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -99,10 +95,10 @@ export default function AdminDashboard() {
         {/* Sidebar */}
         <aside
           className={`
-    fixed top-0 left-0 h-full bg-white shadow-lg w-64 z-50 transform transition-transform duration-300
-    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-    lg:static lg:translate-x-0
-  `}
+            fixed top-0 left-0 h-full bg-white shadow-lg w-64 z-50 transform transition-transform duration-300
+            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+            lg:static lg:translate-x-0
+          `}
         >
           <nav className="space-y-2 mt-20 lg:mt-0">
             <button
@@ -272,7 +268,7 @@ export default function AdminDashboard() {
           )}
 
           {currentView === "sellers" && <SellersManagement />}
-          {currentView === "customers" && <CustomersManagement />}
+          {currentView === "customers" && <CustomersManagement />} {/* ✅ Now renders the full component */}
           {currentView === "products" && <ProductsManagement />}
           {currentView === "orders" && <OrdersManagement />}
           {currentView === "reports" && <ReportsManagement />}
@@ -283,29 +279,7 @@ export default function AdminDashboard() {
   );
 }
 
-// Placeholder components for different views
-// function SellersManagement() {
-//   return (
-//     <div className="bg-white rounded-xl shadow-md p-6">
-//       <h2 className="text-2xl font-bold text-gray-800 mb-4">
-//         Sellers Management
-//       </h2>
-//       <p className="text-gray-600">View and manage all sellers</p>
-//     </div>
-//   );
-// }
-
-function CustomersManagement() {
-  return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">
-        Customers Management
-      </h2>
-      <p className="text-gray-600">View and manage all customers</p>
-    </div>
-  );
-}
-
+// Placeholder components for views that aren't implemented yet
 function ProductsManagement() {
   return (
     <div className="bg-white rounded-xl shadow-md p-6">

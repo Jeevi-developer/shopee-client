@@ -98,3 +98,13 @@ input, textarea, select {
   font-family: "Nico Moji", sans-serif;
   font-size: x-large;
 }
+
+@keyframes fadeZoom {
+  0% { opacity: 0; transform: scale(0.59); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 20%; }
+  100% { background-position: 50% 50%; }
+}

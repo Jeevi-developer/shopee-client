@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { ShoppingBag, Users, Award, Heart, TrendingUp, Shield } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingBag, Users, Award, Heart, TrendingUp, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from "react-router-dom";
 
 export default function AboutUs() {
   const [selectedMember, setSelectedMember] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const stats = [
     { label: 'Happy Customers', value: '50K+', icon: Users },
@@ -30,38 +31,73 @@ export default function AboutUs() {
     }
   ];
 
-  const team = [
-    { 
-      name: 'Jeevitha', 
-      icon: '💻',
-      gradient: 'from-blue-500 to-cyan-500',
-      expertise: 'React, Node.js, MongoDB, AWS',
-      bio: 'Passionate developer with expertise in building scalable web applications.',
-      contributions: ['Built core platform architecture', 'Implemented payment gateway', 'Optimized database performance']
+  const testimonials = [
+    {
+      name: "Priya Sharma",
+      location: "Mumbai, Maharashtra",
+      rating: 5,
+      text: "Amazing platform! Found the perfect saree at an unbeatable price. The seller was responsive and delivery was super fast.",
+      avatar: "PS",
+      color: "from-pink-500 to-rose-500"
     },
-    { 
-      name: 'Sowmiya', 
-      icon: '💻',
-      gradient: 'from-purple-500 to-pink-500',
-      expertise: 'React, Python, PostgreSQL, Docker',
-      bio: 'Creative problem solver focused on delivering exceptional user experiences.',
-      contributions: ['Designed responsive UI components', 'Developed API integrations', 'Enhanced security features']
+    {
+      name: "Rajesh Kumar",
+      location: "Delhi, NCR",
+      rating: 4,
+      text: "Best marketplace for electronics. Compared prices from multiple sellers and saved ₹5,000 on my new laptop!",
+      avatar: "RK",
+      color: "from-blue-500 to-cyan-500"
+    },
+    {
+      name: "Anita Patel",
+      location: "Ahmedabad, Gujarat",
+      rating: 4,
+      text: "Love the variety of sellers! Found unique handmade jewelry that I couldn't find anywhere else. Highly recommend!",
+      avatar: "AP",
+      color: "from-purple-500 to-indigo-500"
+    },
+    {
+      name: "Vikram Singh",
+      location: "Bangalore, Karnataka",
+      rating: 5,
+      text: "Secure payment and excellent buyer protection. Had an issue once, and customer support resolved it within hours.",
+      avatar: "VS",
+      color: "from-green-500 to-emerald-500"
+    },
+    {
+      name: "Meera Reddy",
+      location: "Hyderabad, Telangana",
+      rating: 5,
+      text: "The verified seller badges give me confidence. I've made over 20 purchases and never been disappointed!",
+      avatar: "MR",
+      color: "from-orange-500 to-amber-500"
+    },
+    {
+      name: "Arjun Menon",
+      location: "Kochi, Kerala",
+      rating: 3,
+      text: "Great for small businesses! As a seller, this platform helped me reach customers across India. Game changer!",
+      avatar: "AM",
+      color: "from-teal-500 to-cyan-500"
     }
   ];
-const relatedTeam = [
-  {
-    name: "kathir",
-    // role: "Brand Manager",
-    icon: "📈",
-    gradient: "from-purple-500 to-indigo-500",
-  },
-  {
-    name: "Mathi Alagan",
-    // role: "Content Creator",
-    icon: "📈",
-    gradient: "from-pink-500 to-rose-500",
-  },
-];
+
+  // Auto-slide effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -87,7 +123,7 @@ const relatedTeam = [
             
             <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold mb-2 sm:mb-4 leading-tight">
               <span className="block bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">
-                Our Story
+                About Us
               </span>
             </h1>
             
@@ -134,7 +170,7 @@ const relatedTeam = [
               Connecting Buyers & Sellers Seamlessly
             </h2>
             <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
-              Founded in 2025, iNDXiND SHOPEE PRIVATE LIMITED was built on a revolutionary idea: create a trusted marketplace where sellers can reach millions of buyers, and customers can discover quality products with complete confidence.
+              Founded in 2025, SHOPZY PRIVATE LIMITED was built on a revolutionary idea: create a trusted marketplace where sellers can reach millions of buyers, and customers can discover quality products with complete confidence.
             </p>
             <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
               We don't sell products ourselves—we empower sellers across India to showcase their offerings while providing buyers with instant price comparisons, secure payments, and reliable delivery.
@@ -229,134 +265,106 @@ const relatedTeam = [
         </div>
       </div>
 
-      {/* Team Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20">
-        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">Techincal Team </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-            The talented individuals behind our platform's success
-          </p>
+      {/* Testimonials Section */}
+      <div className="bg-gradient-to-br from-slate-50 to-purple-50 py-12 sm:py-16 lg:py-20 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-12">
+          <div className="text-center">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">What Our Customers Say</h2>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600">Real experiences from thousands of satisfied shoppers</p>
+          </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 max-w-5xl mx-auto mb-12 sm:mb-16 lg:mb-20">
-          {team.map((member, index) => (
-            <div 
-              key={index} 
-              className="group relative cursor-pointer"
-              onClick={() => setSelectedMember(member)}
-            >
-              <div className="relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
-                <div className="absolute inset-0 opacity-5">
-                  <div className="absolute inset-0" style={{
-                    backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(99, 102, 241) 1px, transparent 0)',
-                    backgroundSize: '24px 24px'
-                  }}></div>
-                </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hidden sm:block"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-800" />
+          </button>
+          
+          <button
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hidden sm:block"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-800" />
+          </button>
 
-                <div className={`absolute -top-8 -right-8 sm:-top-10 sm:-right-10 w-24 h-24 sm:w-40 sm:h-40 bg-gradient-to-br ${member.gradient} rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
-                
-                <div className="relative flex justify-center mb-4 sm:mb-6">
-                  <div className={`relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br ${member.gradient} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
-                    <span className="text-4xl sm:text-5xl lg:text-6xl">{member.icon}</span>
-                    <div className={`absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-dashed opacity-50 animate-spin`} style={{ animationDuration: '8s', borderColor: 'currentColor' }}></div>
+          {/* Testimonial Cards Container */}
+          <div className="relative overflow-hidden">
+            <div 
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {testimonials.map((testimonial, idx) => (
+                <div key={idx} className="w-full flex-shrink-0 px-4">
+                  <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-xl max-w-4xl mx-auto">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
+                      <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br ${testimonial.color} flex items-center justify-center text-white font-bold text-2xl sm:text-3xl flex-shrink-0`}>
+                        {testimonial.avatar}
+                      </div>
+                      <div className="flex-1 text-center sm:text-left">
+                        <h4 className="font-bold text-gray-900 text-xl sm:text-2xl mb-2">{testimonial.name}</h4>
+                        <p className="text-gray-500 text-sm sm:text-base mb-3">{testimonial.location}</p>
+                        <div className="flex gap-1 justify-center sm:justify-start">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <span key={i} className="text-yellow-400 text-xl">⭐</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <p className="text-gray-700 text-lg sm:text-xl leading-relaxed text-center sm:text-left mb-6">
+                      "{testimonial.text}"
+                    </p>
+                    
+                    <div className="pt-6 border-t border-gray-100 flex justify-center sm:justify-start">
+                      <span className="inline-flex items-center gap-2 text-sm text-indigo-600 font-medium">
+                        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                        Verified Purchase
+                      </span>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="text-center relative z-10">
-                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                 
-                </div>
-
-                <div className={`absolute bottom-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-tl ${member.gradient} opacity-5 rounded-tl-full`}></div>
-              </div>
-
-              <div className={`absolute -bottom-2 left-4 right-4 sm:left-8 sm:right-8 h-6 sm:h-8 bg-gradient-to-r ${member.gradient} rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500`}></div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Dots Navigation */}
+          <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentSlide === idx ? 'w-8 bg-indigo-600' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to testimonial ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Mobile Navigation Buttons */}
+          <div className="flex sm:hidden justify-center gap-4 mt-6">
+            <button
+              onClick={prevSlide}
+              className="bg-white p-3 rounded-full shadow-lg"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="w-5 h-5 text-gray-800" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="bg-white p-3 rounded-full shadow-lg"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-800" />
+            </button>
+          </div>
         </div>
       </div>
-
-
-{/* Related Team Section */}
-<div className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16 lg:pb-20">
-  <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
-      Marketing Team
-    </h2>
-    <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-      Other professionals who contribute to our company success
-    </p>
-  </div>
-
-  <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 max-w-5xl mx-auto">
-    {relatedTeam.map((member, index) => (
-      <div
-        key={index}
-        className="group relative cursor-pointer"
-        onClick={() => setSelectedMember(member)}
-      >
-        {/* Main Card */}
-        <div className="relative bg-gradient-to-br from-gray-50 to-white rounded-xl sm:rounded-2xl p-6 sm:p-8 border-2 border-gray-200 hover:border-indigo-300 transition-all duration-500 overflow-hidden hover:shadow-xl">
-          
-          {/* Animated Background Pattern */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50"></div>
-          </div>
-
-          {/* Top Badge */}
-          <div className="absolute -top-1 -right-1">
-            <div className={`w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br ${member.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}></div>
-          </div>
-
-          {/* Content Container */}
-          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            
-            {/* Icon Container */}
-            <div className="relative flex-shrink-0">
-              <div className={`relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br ${member.gradient} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110`}>
-                <span className="text-3xl sm:text-4xl">{member.icon}</span>
-                
-                {/* Animated Ring */}
-                <div className="absolute inset-0 rounded-2xl border-2 border-white opacity-20"></div>
-                <div className="absolute -inset-2 rounded-2xl border border-gray-300 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></div>
-              </div>
-              
-              {/* Status Indicator */}
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white shadow-md"></div>
-            </div>
-
-            {/* Text Content */}
-            <div className="flex-1 text-center sm:text-left">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">
-                {member.name}
-              </h3>
-              <p className="text-sm sm:text-base text-gray-500 mb-3 sm:mb-4 font-medium">
-                {member.role}
-              </p>
-              
-              {/* Action Bar */}
-              <div className="flex items-center justify-center sm:justify-start gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-xs sm:text-sm text-indigo-600 font-semibold">View Profile</span>
-                <svg className="w-4 h-4 text-indigo-600 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Accent Line */}
-          <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${member.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
-        </div>
-
-        {/* Hover Shadow Effect */}
-        <div className={`absolute inset-0 -z-10 bg-gradient-to-r ${member.gradient} rounded-xl sm:rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-105`}></div>
-      </div>
-    ))}
-  </div>
-</div>
-
 
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-12 sm:py-16 lg:py-20">
@@ -381,8 +389,6 @@ const relatedTeam = [
           </div>
         </div>
       </div>
-
-      
 
       <style jsx>{`
         .ticker-wrapper {

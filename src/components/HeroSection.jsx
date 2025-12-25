@@ -186,7 +186,7 @@ const DropdownCategoryMenu = () => {
                 <ShoppingCart className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                INDXIND SHOPEE
+                SHOPZY
               </span>
             </motion.div>
 
@@ -512,7 +512,7 @@ const DropdownCategoryMenu = () => {
           >
             <div className="text-8xl mb-6">🛒</div>
             <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              Welcome to INDXIND SHOPEE
+              Welcome to SHOPZY
             </h1>
             <p className="text-xl text-gray-600 mb-8">
               Select a category from the menu above to start shopping

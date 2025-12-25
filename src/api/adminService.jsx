@@ -1,9 +1,14 @@
-import axiosInstance from "./axios"; 
+import axiosInstance from "./axios";
 
 // =======================
 // SELLERS BASE URL
 // =======================
 const SELLER_BASE = "/admin/sellers";
+
+// =======================
+// CUSTOMERS BASE URL
+// =======================
+const CUSTOMER_BASE = "/admin/customers";
 
 // =======================
 // PRODUCTS BASE URL
@@ -56,6 +61,45 @@ const adminService = {
   },
 
   // =======================
+  // CUSTOMER MANAGEMENT
+  // =======================
+  listCustomers: async (params) => {
+    const res = await axiosInstance.get(`${CUSTOMER_BASE}/list`, { params });
+    return res.data;
+  },
+
+  getCustomer: async (id) => {
+    const res = await axiosInstance.get(`${CUSTOMER_BASE}/${id}`);
+    return res.data;
+  },
+
+  approveCustomer: async (id, approved, reason) => {
+    const res = await axiosInstance.put(`${CUSTOMER_BASE}/${id}/approve`, {
+      approved,
+      reason,
+    });
+    return res.data;
+  },
+
+  updateCustomerStatus: async (id, status, reason) => {
+    const res = await axiosInstance.put(`${CUSTOMER_BASE}/${id}/status`, {
+      status,
+      reason,
+    });
+    return res.data;
+  },
+
+  deleteCustomer: async (id) => {
+    const res = await axiosInstance.delete(`${CUSTOMER_BASE}/${id}`);
+    return res.data;
+  },
+
+  getCustomerStats: async () => {
+    const res = await axiosInstance.get(`${CUSTOMER_BASE}/stats`);
+    return res.data;
+  },
+
+  // =======================
   // PRODUCT MANAGEMENT
   // =======================
   listProducts: async (params) => {
@@ -69,10 +113,10 @@ const adminService = {
   },
 
   approveProduct: async (id, action, reason) => {
-    const res = await axiosInstance.put(
-      `${PRODUCT_BASE}/${id}/approve`,
-      { action, reason }
-    );
+    const res = await axiosInstance.put(`${PRODUCT_BASE}/${id}/approve`, {
+      action,
+      reason,
+    });
     return res.data;
   },
 

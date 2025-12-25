@@ -9,7 +9,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ProductsManagement from "../../components/ProductsManagement";
 import OrdersManagement from "../../components/OrdersManagement";
 import CustomersManagement from "../../components/CustomersManagement";
@@ -426,6 +426,24 @@ export default function SellerDashboard() {
                       Configure your store
                     </p>
                   </button>
+
+                  {/* Upload Agreement */}
+                  <Link
+                    to="/seller/upload-agreement"
+                    className={`p-4 border-2 rounded-lg transition-all text-left ${
+                      !isApproved && sellerStatus === "pending"
+                        ? "border-gray-300 bg-gray-100 cursor-not-allowed opacity-60"
+                        : "border-purple-200 hover:bg-purple-50"
+                    }`}
+                  >
+                    <Settings className="text-purple-600 mb-2" size={24} />
+                    <h4 className="font-semibold text-gray-800">
+                      Upload Agreement
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Upload your signed seller agreement
+                    </p>
+                  </Link>
                 </div>
               </div>
 

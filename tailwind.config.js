@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       animation: {
         fadeIn: "fadeIn 0.2s ease-in-out",
+        "spin-slow": "spin 2s linear infinite", // <-- added slow spin
       },
       keyframes: {
         fadeIn: {

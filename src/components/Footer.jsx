@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp, FaTwitter } from "react-icons/fa";
 import { Building2, MapPin, Phone, Mail, FileText, X } from "lucide-react";
 
 export default function Footer() {
@@ -12,23 +12,24 @@ export default function Footer() {
     { icon: <FaInstagram />, link: "https://www.instagram.com/indxind_shopee/?hl=en", color: "#E4405F" },
     { icon: <FaYoutube />, link: "http://www.youtube.com/@INDXINDSHOPEE", color: "#FF0000" },
     { icon: <FaWhatsapp />, link: "https://whatsapp.com/channel/0029Vb7WHrEFnSzIrhGgUM2Z", color: "#25D366" },
+    { icon: <FaTwitter />, link: "https://x.com/indxindshopee", color: "#1DA1F2" },
   ];
 
   const navLinks = [
     { path: '/home', label: 'Home' },
     { path: '/products', label: 'Products' },
-    { path: '/AboutUs', label: 'AboutUs' },
-    { path: '/ContactUsPage', label: 'Contact' }
+    { path: '/AboutUs', label: 'About Us' },
+    { path: '/ContactUsPage', label: 'Contact Us' }
   ];
 
   // Company details - Update these with your actual information
   const companyDetails = {
-    name: "iNDXiND SHOPEE PRIVATE LIMITED",
+    name: "SHOPZY PRIVATE LIMITED",
     cin: "U46909TN2025PTC186007",
     address: "   5/45, Opposite to 1008 Sivalayam Temple , Salem to Cochin Highway, Ariyanoor, Salem, Tamilnadu, India. Pin - 636308",
     city: "Salem, Tamil Nadu - 636001",
     country: "India",
-    email: "support@indexinshopee.com",
+    email: "indxindshopee@gmail.com",
     phone: "91 04272903575",
   };
 
@@ -47,12 +48,12 @@ export default function Footer() {
                 style={{ color: "#1135A7" }}
               >
                 <img
-                  src="/assets/images/cdex-logo.webp"
-                  alt="CDEX Logo"
+                  src="/assets/images/shopzy-logo.png"
+                  alt="Shopzy Logo"
                   className="h-9 w-9"
                 />
-                <span className="hidden sm:inline">iNDXiND SHOPEE</span>
-                <span className="sm:hidden">iNDXiND</span>
+                <span className="hidden sm:inline">SHOPZY</span>
+                <span className="sm:hidden">SHOPZY</span>
               </div>
               
               <p className="text-sm text-gray-600 max-w-xs">
@@ -112,7 +113,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="py-4 text-center bg-gray-200 text-gray-600 border-t border-gray-300">
           <p className="text-xs md:text-sm">
-            © {new Date().getFullYear()} Indexin Shopee. All rights reserved.
+            © {new Date().getFullYear()} SHOPZY. All rights reserved.
           </p>
           <p className="mt-1 text-[10px] md:text-xs text-gray-500">
             Product prices & availability may change. Not liable for delays.
@@ -215,7 +216,7 @@ export default function Footer() {
 
             <div className="text-gray-700 text-sm leading-relaxed space-y-3 max-h-[70vh] overflow-y-auto">
               <p>
-                By shopping with <strong>Indxind Shopee</strong>, you agree to
+                By shopping with <strong>SHOPZY</strong>, you agree to
                 the following terms:
               </p>
 
@@ -266,7 +267,7 @@ export default function Footer() {
                   href="mailto:support@indexinshopee.com"
                   className="text-indigo-600"
                 >
-                  support@indexinshopee.com
+                  indxindshopee@gmail.com
                 </a>
               </p>
             </div>

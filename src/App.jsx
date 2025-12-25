@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,6 +8,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
+import Loader from "./components/Loader"; // <-- Import loader
 import { AnimatePresence, motion } from "framer-motion";
 
 import { Provider } from "react-redux";
@@ -25,11 +27,14 @@ import Homepage from "./components/navbar/Homepage";
 import CustomerLogin from "./pages/client/CustomerLogin";
 import CustomerRegistration from "./pages/client/CustomerRegistration";
 import CustomerProfile from "./pages/client/CustomerProfile";
+import EditProfile from "./pages/client/EditProfile";
 import CustomerDashboard from "./pages/client/CustomerDashboard";
 
 import SellerLogin from "./pages/seller/SellerLogin";
 import SellerRegistration from "./pages/SellerRegistration";
+import { SellerFormProvider } from "./components/SellerRegistration/context/SellerFormContext";
 import SellerDashboard from "./pages/seller/SellerDashboard";
+import UploadAgreement from "./pages/Seller/UploadAgreement";
 import SellerForgotPassword from "./pages/SellerForgotPassword";
 import SellerResetPassword from "./pages/SellerResetPassword";
 
@@ -65,16 +70,18 @@ function Layout() {
     "/SearchPage",
     "/ContactUsPage",
     "/AboutUs",
-    
+    "/CustomerDashboard",
+    "/profile",
   ];
 
   const isProductDetailsPage = location.pathname.startsWith("/product/");
-
   const shouldHideNavbar =
     hideNavbarRoutes.includes(location.pathname) || isProductDetailsPage;
 
   return (
     <>
+      <Toaster position="top-right" reverseOrder={false} />
+
       {/* Navbar Animation */}
       <AnimatePresence mode="wait">
         {!shouldHideNavbar && (
@@ -95,10 +102,7 @@ function Layout() {
         <Routes location={location} key={location.pathname}>
           {/* PUBLIC ROUTES */}
           <Route path="/Login" element={<CustomerLogin />} />
-          <Route
-            path="/CustomerRegistration"
-            element={<CustomerRegistration />}
-          />
+          <Route path="/CustomerRegistration" element={<CustomerRegistration />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
@@ -118,7 +122,7 @@ function Layout() {
               </PrivateRoute>
             }
           />
-
+          <Route path="/profile" element={<EditProfile />} />
           <Route
             path="/CustomerDashboard"
             element={
@@ -138,21 +142,24 @@ function Layout() {
               </PrivateRoute>
             }
           />
-
           <Route path="/search" element={<SearchPage />} />
 
           {/* SELLER ROUTES */}
           <Route path="/SellerLogin" element={<SellerLogin />} />
-          <Route path="/SellerRegistration" element={<SellerRegistration />} />
           <Route
-            path="/seller/forgot-password"
-            element={<SellerForgotPassword />}
+            path="/SellerRegistration"
+            element={
+              <SellerFormProvider>
+                <SellerRegistration />
+              </SellerFormProvider>
+            }
           />
+          <Route path="/seller/upload-agreement" element={<UploadAgreement />} />
+          <Route path="/seller/forgot-password" element={<SellerForgotPassword />} />
           <Route
             path="/seller/reset-password/:token"
             element={<SellerResetPassword />}
           />
-
           <Route
             path="/SellerDashboard"
             element={
@@ -161,7 +168,6 @@ function Layout() {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/AddProduct"
             element={
@@ -171,8 +177,8 @@ function Layout() {
             }
           />
 
+          {/* ADMIN ROUTES */}
           <Route path="/admin/sellers" element={<SellersManagement />} />
-
           <Route
             path="/admin/dashboard"
             element={
@@ -181,8 +187,6 @@ function Layout() {
               </PrivateRoute>
             }
           />
-
-          {/* Duplicate Admin Route (role-based) */}
           <Route
             path="/AdminDashboard"
             element={
@@ -203,9 +207,18 @@ function Layout() {
 }
 
 // ======================
-// FINAL APP COMPONENT
+// FINAL APP COMPONENT WITH LOADER
 // ======================
 export default function App() {
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500); // simulate 1.5s loading
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <Loader />; // show loader while loading
+
   return (
     <Provider store={store}>
       <AuthProvider>

@@ -9,7 +9,7 @@ import {
   AlertCircle,
   Gift,
   Phone,
-  MapPin, // ✅ added missing icon import
+  MapPin,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../../api/axios";
@@ -33,17 +33,12 @@ const CustomerRegistration = () => {
     referralCode: "",
     agreeToTerms: false,
     emailOtp: "",
-    smsOtp: "",
+    // smsOtp: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
-
-  // ✅ Updated for Render backend
-  // const API_BASE_URL = "https://shopee-server-2.onrender.com/api";
-
-  const API_BASE_URL = "http://localhost:5000/api";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -51,7 +46,6 @@ const CustomerRegistration = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
-    // setMessage({ type: "", text: "" });
   };
 
   const showMessage = (type, text, duration = 5000) => {
@@ -65,6 +59,7 @@ const CustomerRegistration = () => {
   const handleSendOTP = async (e) => {
     e.preventDefault();
 
+    // Validation
     if (!formData.fullName)
       return showMessage("error", "Full name is required");
     if (!formData.email) return showMessage("error", "Email is required");
@@ -78,19 +73,11 @@ const CustomerRegistration = () => {
       return showMessage("error", "Please accept Terms & Conditions");
 
     setLoading(true);
-
     try {
-      // Send Email OTP
-      await axiosInstance.post("/auth/send-otp", {
-        email: formData.email,
-      });
+      // Send Email OTP only
+      await axiosInstance.post("/auth/send-otp", { email: formData.email });
 
-      // Send SMS OTP
-      await axiosInstance.post("/auth/send-sms-otp", {
-        mobile: formData.mobile,
-      });
-
-      showMessage("success", "Email OTP and SMS OTP sent!");
+      showMessage("success", "Email OTP sent!");
       setTimeout(() => setStep("verifyOTP"), 1500);
     } catch (error) {
       showMessage(
@@ -109,17 +96,15 @@ const CustomerRegistration = () => {
     if (!formData.emailOtp || formData.emailOtp.length !== 6)
       return showMessage("error", "Enter valid 6-digit Email OTP");
 
-    if (!formData.smsOtp || formData.smsOtp.length !== 6)
-      return showMessage("error", "Enter valid 6-digit SMS OTP");
+    // if (!formData.smsOtp || formData.smsOtp.length !== 6)
+    //   return showMessage("error", "Enter valid 6-digit SMS OTP");
 
     setLoading(true);
-
     try {
       await axiosInstance.post("/auth/verify-otp", {
         email: formData.email,
         emailOtp: formData.emailOtp.toString(),
-        smsOtp: formData.smsOtp.toString(),
-
+        // smsOtp: formData.smsOtp.toString(),
         // registration data
         password: formData.password,
         name: formData.fullName,
@@ -135,10 +120,7 @@ const CustomerRegistration = () => {
       });
 
       showMessage("success", "Registration successful! Redirecting...");
-
-      setTimeout(() => {
-        navigate("/Login");
-      }, 2000);
+      setTimeout(() => navigate("/Login"), 2000);
     } catch (error) {
       showMessage(
         "error",
@@ -149,48 +131,9 @@ const CustomerRegistration = () => {
     }
   };
 
-  const handleSendSMSOTP = async (e) => {
-    e.preventDefault();
-
-    if (!formData.mobile) {
-      return showMessage("error", "Mobile number is required");
-    }
-
-    // Clean & format mobile number
-    let formattedMobile = formData.mobile.toString().replace(/[^0-9]/g, "");
-
-    // Add +91 if missing
-    if (!formattedMobile.startsWith("91")) {
-      formattedMobile = "91" + formattedMobile;
-    }
-
-    formattedMobile = "+" + formattedMobile;
-
-    console.log("📤 Frontend sending mobile:", formattedMobile);
-
-    setLoading(true);
-
-    try {
-      await axiosInstance.post("/auth/send-sms-otp", {
-        mobile: formattedMobile,
-      });
-
-      showMessage("success", "SMS OTP sent!");
-    } catch (error) {
-      console.error("SMS OTP error:", error);
-      showMessage("error", "Failed to send SMS OTP");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendEmailOTP = () => {
+  const handleResendEmailOTP = () =>
     handleSendOTP({ preventDefault: () => {} });
-  };
-
-  const handleResendSMSOTP = () => {
-    handleSendSMSOTP({ preventDefault: () => {} });
-  };
+  // const handleResendSMSOTP = () => handleSendOTP({ preventDefault: () => {} });
 
   const MessageAlert = () => {
     if (!message.text) return null;
@@ -227,6 +170,7 @@ const CustomerRegistration = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-4">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+            {/* Registration form header */}
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
                 <User className="text-white" size={40} />
@@ -283,6 +227,8 @@ const CustomerRegistration = () => {
                   />
                 </div>
               </div>
+
+              {/* Gender */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Gender
@@ -301,6 +247,7 @@ const CustomerRegistration = () => {
                 </select>
               </div>
 
+              {/* Date of Birth */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Date of Birth
@@ -314,6 +261,7 @@ const CustomerRegistration = () => {
                   required
                 />
               </div>
+
               {/* Mobile Number */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -421,6 +369,8 @@ const CustomerRegistration = () => {
                   />
                 </div>
               </div>
+
+              {/* Pincode */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Pincode
@@ -436,6 +386,8 @@ const CustomerRegistration = () => {
                   required
                 />
               </div>
+
+              {/* State */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   State
@@ -450,6 +402,7 @@ const CustomerRegistration = () => {
                   required
                 />
               </div>
+
               {/* City & Country */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -541,7 +494,7 @@ const CustomerRegistration = () => {
                 <p className="text-gray-600 text-sm">
                   Already have an account?{" "}
                   <Link
-                    to="/CustomerLogin"
+                    to="/Login"
                     className="text-indigo-600 font-semibold"
                   >
                     Sign In
@@ -571,14 +524,12 @@ const CustomerRegistration = () => {
               <h1 className="text-3xl font-bold text-gray-800 mb-2">
                 Verify Your Account
               </h1>
-
               <p className="text-gray-600 text-sm">
                 Email verification code sent to
               </p>
               <p className="text-purple-600 font-semibold mt-1 text-lg">
                 {formData.email}
               </p>
-
               <p className="text-xs text-gray-500 mt-3">
                 Please enter both Email OTP & SMS OTP
               </p>
@@ -602,14 +553,9 @@ const CustomerRegistration = () => {
                 />
               </div>
 
-              <p className="text-gray-600 text-sm mt-4">
-                SMS verification code sent to
-              </p>
-              <p className="text-pink-600 font-semibold mt-1 text-lg">
-                {formData.mobile}
-              </p>
-
               {/* SMS OTP */}
+              {/* <p className="text-gray-600 text-sm mt-4">SMS verification code sent to</p>
+              <p className="text-pink-600 font-semibold mt-1 text-lg">{formData.mobile}</p>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-3 text-center">
                   Enter 6-Digit SMS OTP
@@ -624,11 +570,10 @@ const CustomerRegistration = () => {
                   placeholder="000000"
                   required
                 />
-              </div>
+              </div> */}
 
               <MessageAlert />
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}
@@ -641,21 +586,21 @@ const CustomerRegistration = () => {
               <div className="space-y-2">
                 <button
                   type="button"
-                  onClick={() => handleResendEmailOTP()}
+                  onClick={handleResendEmailOTP}
                   disabled={loading}
                   className="w-full text-purple-600 hover:text-purple-700 font-medium py-2 transition disabled:opacity-50 text-sm"
                 >
                   Resend Email OTP
                 </button>
 
-                <button
+                {/* <button
                   type="button"
-                  onClick={() => handleResendSMSOTP()}
+                  onClick={handleResendSMSOTP}
                   disabled={loading}
                   className="w-full text-pink-600 hover:text-pink-700 font-medium py-2 transition disabled:opacity-50 text-sm"
                 >
                   Resend SMS OTP
-                </button>
+                </button> */}
               </div>
 
               {/* Back */}
