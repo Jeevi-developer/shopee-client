@@ -133,7 +133,7 @@ const MobileResponsiveDashboard = () => {
                 alt="CDEX Logo"
                 className="h-9 w-9"
               />
-              iNDXiND SHOPEE
+              SHOPZY
             </div>
           </div>
           <button
